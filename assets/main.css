@@ -31,3 +31,7 @@ body {
   color: #dc3545;
   font-style: italic;
 }
+
+input {
+  width: 300px;
+}

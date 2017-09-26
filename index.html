@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>PyBites - PR PEP checker</title>
+    <!-- Styles -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/main.css">
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="https://pybit.es">PyBites</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="https://realpython.com/blog">Back to Real Python's blog post</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <h1 class="mt-5">Check pep8 on PR submission</h1>
+          <p class="lead">Powered by AWS Lambda, API Gateway, and Python 3.</p>
+          <hr><br>
+          <p>Choose a PyBites Code Challenges repo PR</p>
+          <form>
+            <div class="form-group">
+              <input id='prid' name='prid' value=''>
+            </div>
+            <button type="submit" class="btn btn-primary">Check PEP8</button>
+          </form>
+          <h5 class="answer"></h5>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <small class="text-muted">
+          <span>© Copyright 2017 <a href="https://pybit.es">PyBites</a> | Special thnaks to <a href='https://realpython.com/blog/python/code-evaluation-with-aws-lambda-and-api-gateway' target='_blank'>Real Python's great tutorial</a></span>
+        </small>
+      </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/popper/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="assets/main.js"></script>
+  </body>
+</html>

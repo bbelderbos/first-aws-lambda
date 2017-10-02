@@ -1,4 +1,5 @@
 import os
+from pprint import pprint as pp
 import re
 import urllib.request
 
@@ -7,21 +8,21 @@ import pep8
 gh_pr_url = 'https://api.github.com/repos/pybites/challenges/pulls/{}/files'
 url_pattern = re.compile(r'https[^"]+')
 
+TMP = '/tmp'
+
 
 def lambda_handler(event, context):
-    # get code from payload
-    prid = get_prid(event)
-    raw_python_files = get_files_from_pr(prid)
-    results = pep8_files(raw_python_files)
-    print_report(results)
-
-
-def get_prid(event):
     try:
-        return int(event['prid'])
-    except ValueError:
-        print('ERROR: not an int')
+        prid = int(event.get('prid', os.environ.get('prid')))
+    except ValueError as ve:
+        print(ve)
         raise
+
+    raw_python_files = get_files_from_pr(prid)
+
+    ret = pep8_files(raw_python_files)
+    print('result: {}'.format(ret))
+    return ret
 
 
 def get_files_from_pr(prid):
@@ -39,11 +40,13 @@ def get_files_from_pr(prid):
 def pep8_files(raw_python_files):
     results = {}
     for pyfile in raw_python_files:
-        tempfile = os.path.basename(pyfile)
+        tempfile = os.path.join(TMP, os.path.basename(pyfile))
         num_faults = check_file(pyfile, tempfile)
         results[tempfile] = num_faults
 
-    return results
+    pp(results)
+
+    return sum(results.values()) == 0
 
 
 def check_file(pyfile, tempfile):
@@ -59,10 +62,3 @@ def check_file(pyfile, tempfile):
         os.remove(tempfile)
 
     return num_faults
-
-
-def print_report(results):
-    print('\nRESULTS')
-    print('File -> issues')
-    for filename, num_faults in results.items():
-        print('{:<20} | {}'.format(filename, num_faults))

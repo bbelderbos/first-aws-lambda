@@ -1,3 +1,6 @@
 from pep_lambda import lambda_handler
 
-lambda_handler({'prid': 103}, None)
+result = lambda_handler({'prid': 103}, None)
+
+print('result calling lambda_handler:')
+print(result)

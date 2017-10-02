@@ -1,6 +1,7 @@
+from io import StringIO
 import os
-from pprint import pprint as pp
 import re
+import sys
 import urllib.request
 
 import pep8
@@ -8,6 +9,7 @@ import pep8
 gh_pr_url = 'https://api.github.com/repos/pybites/challenges/pulls/{}/files'
 url_pattern = re.compile(r'https[^"]+')
 
+OK = 'ok'
 TMP = '/tmp'
 
 
@@ -20,9 +22,20 @@ def lambda_handler(event, context):
 
     raw_python_files = get_files_from_pr(prid)
 
-    ret = pep8_files(raw_python_files)
-    print('result: {}'.format(ret))
-    return ret
+    # https://stackoverflow.com/a/36310187/1128469
+    saved_stdout = sys.stdout
+    sys.stdout = StringIO()
+
+    results = pep8_files(raw_python_files)
+
+    testout = sys.stdout.getvalue().split("\n")
+    sys.stdout.close()
+    sys.stdout = saved_stdout
+
+    if sum(results.values()) == 0:
+        return OK
+    else:
+        return testout
 
 
 def get_files_from_pr(prid):
@@ -43,10 +56,7 @@ def pep8_files(raw_python_files):
         tempfile = os.path.join(TMP, os.path.basename(pyfile))
         num_faults = check_file(pyfile, tempfile)
         results[tempfile] = num_faults
-
-    pp(results)
-
-    return sum(results.values()) == 0
+    return results
 
 
 def check_file(pyfile, tempfile):

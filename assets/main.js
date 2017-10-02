@@ -6,23 +6,26 @@ $('form').on('submit', (event) => {
   grade(payload);
 });
 
+// https://gist.github.com/thiagodebastos/08ea551b97892d585f17
+var mydata = JSON.parse(data);
+var url = mydata[0].api_url
+
 // ajax request
 function grade(payload) {
   $.ajax({
     method: 'POST',
-    url: 'tbd'
+    url: url,
     dataType: 'json',
     contentType: 'application/json',
     data: JSON.stringify(payload)
   })
   .done((res) => {
-    let message = 'Incorrect. Please try again.';
-    if (res) {
-      message = 'Correct!';
+    if (res === 'ok') {
+      $('.answer').html('All files PEP8 compliant').addClass('ok');
+    } else {
+      $('.answer').html('PEP8 errors: <pre>' + res.join("\n") + '</pre>').addClass('err');
     }
-    $('.answer').html(message);
     console.log(res);
-    console.log(message);
   })
   .catch((err) => {
     $('.answer').html('Something went terribly wrong!');

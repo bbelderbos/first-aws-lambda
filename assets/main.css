@@ -17,7 +17,6 @@ body {
 
 .answer {
   padding-top: 30px;
-  color: #dc3545;
   font-style: italic;
 }
 
@@ -26,10 +25,17 @@ body {
     padding-top: 56px;
   }
 }
-.answer {
-  padding-top: 30px;
-  color: #dc3545;
-  font-style: italic;
+
+pre {
+  font-size: 75%;
+}
+
+.ok {
+  color: green;
+}
+
+.err {
+  color: red;
 }
 
 input {
